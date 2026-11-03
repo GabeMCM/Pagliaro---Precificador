@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: pagliaro-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pagliaro_precificador
+      POSTGRES_USER: pagliaro
+      POSTGRES_PASSWORD: troque-esta-senha
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pagliaro_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pagliaro -d pagliaro_precificador"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pagliaro_pgdata:

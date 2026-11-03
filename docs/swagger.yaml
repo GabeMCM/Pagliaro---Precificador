@@ -1,0 +1,1099 @@
+basePath: /
+definitions:
+  internal_app.apiKeyListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_domain.APIKey'
+        type: array
+    type: object
+  internal_app.createAPIKeyRequest:
+    properties:
+      nome:
+        type: string
+      papel:
+        type: string
+    type: object
+  internal_app.createAPIKeyResponse:
+    properties:
+      api_key:
+        type: string
+      registro:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.APIKey'
+    type: object
+  internal_app.errorBody:
+    properties:
+      code:
+        example: QUOTE_VALIDATION_ERROR
+        type: string
+      details:
+        items:
+          type: string
+        type: array
+      message:
+        example: mensagem do erro
+        type: string
+    type: object
+  internal_app.errorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/internal_app.errorBody'
+    type: object
+  internal_app.healthResponse:
+    properties:
+      status:
+        example: ok
+        type: string
+    type: object
+  internal_app.pricingTableListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTable'
+        type: array
+    type: object
+  internal_app.requestLogListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_domain.RequestLog'
+        type: array
+    type: object
+  internal_app.simulateTableItemDoc:
+    properties:
+      mutualidade:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.MutualityRequest'
+      result:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.TableResult'
+    type: object
+  internal_app.simulateTableRequest:
+    properties:
+      ano_calculo:
+        type: integer
+      ano_ibge:
+        type: integer
+      ano_tabua_mortalidade:
+        type: integer
+      cenarios:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.MutualityRequest'
+        type: array
+      custos:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.CostsRequest'
+      ibge:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.IBGESourceRequest'
+      margens:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.MarginsRequest'
+      mutualidade:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.MutualityRequest'
+      planos:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.PlanRequest'
+        type: array
+      revisao_populacional:
+        type: integer
+      versao:
+        type: string
+    type: object
+  internal_app.simulateTableResponseDoc:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/internal_app.simulateTableItemDoc'
+        type: array
+    type: object
+  pagliaro-precificador_internal_domain.APIKey:
+    properties:
+      ativa:
+        type: boolean
+      criada_em:
+        type: string
+      id:
+        type: string
+      nome:
+        type: string
+      papel:
+        type: string
+      prefixo:
+        type: string
+      revogada_em:
+        type: string
+      ultimo_uso_em:
+        type: string
+    type: object
+  pagliaro-precificador_internal_domain.IBGEMetadata:
+    properties:
+      ano_calculo:
+        type: integer
+      ano_tabua_mortalidade:
+        type: integer
+      mortality_ages:
+        type: integer
+      mortality_sha256:
+        type: string
+      mortality_url:
+        type: string
+      population_ages:
+        type: integer
+      population_sha256:
+        type: string
+      population_url:
+        type: string
+      revisao_populacional:
+        type: integer
+    type: object
+  pagliaro-precificador_internal_domain.PricingTable:
+    properties:
+      created_at:
+        type: string
+      ibge_year:
+        type: integer
+      id:
+        type: string
+      request: {}
+      result:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.TableResult'
+      status:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.TableStatus'
+      updated_at:
+        type: string
+      version:
+        type: string
+    type: object
+  pagliaro-precificador_internal_domain.PricingTableRow:
+    properties:
+      actuarial_cost:
+        type: number
+      age_band:
+        type: string
+      bank_fee:
+        type: number
+      base_monthly_price:
+        type: number
+      coverage:
+        type: number
+      mutualized_actuarial_cost:
+        type: number
+      operational_cost:
+        type: number
+      plan_name:
+        type: string
+      population:
+        type: number
+      qA:
+        type: number
+      qx_0_17:
+        type: number
+      qx_band:
+        type: number
+      reference_actuarial_cost:
+        type: number
+      technical_cost:
+        type: number
+    type: object
+  pagliaro-precificador_internal_domain.QuoteRecord:
+    properties:
+      created_at:
+        type: string
+      erp_quote_id:
+        type: string
+      id:
+        type: string
+      request: {}
+      request_hash:
+        type: string
+      result: {}
+    type: object
+  pagliaro-precificador_internal_domain.RequestLog:
+    properties:
+      api_key_id:
+        type: string
+      created_at:
+        type: string
+      duration_ms:
+        type: integer
+      id:
+        type: string
+      method:
+        type: string
+      path:
+        type: string
+      remote_addr:
+        type: string
+      request_id:
+        type: string
+      role:
+        type: string
+      status:
+        type: integer
+    type: object
+  pagliaro-precificador_internal_domain.TableResult:
+    properties:
+      generated_at:
+        type: string
+      ibge_year:
+        type: integer
+      rows:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTableRow'
+        type: array
+      summary:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.TableSummary'
+      version:
+        type: string
+      warnings:
+        items:
+          type: string
+        type: array
+    type: object
+  pagliaro-precificador_internal_domain.TableStatus:
+    enum:
+    - draft
+    - approved
+    - active
+    - archived
+    type: string
+    x-enum-varnames:
+    - TableDraft
+    - TableApproved
+    - TableActive
+    - TableArchived
+  pagliaro-precificador_internal_domain.TableSummary:
+    properties:
+      bank_fee:
+        type: number
+      commission_rate:
+        type: number
+      ibge:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.IBGEMetadata'
+      mutuality_factor:
+        type: number
+      mutuality_method:
+        type: string
+      operational_cost:
+        type: number
+      profit_rate:
+        type: number
+      qx_0_17:
+        type: number
+      reference_by_plan:
+        additionalProperties:
+          format: float64
+          type: number
+        type: object
+      rounding:
+        type: string
+    type: object
+  pagliaro-precificador_internal_pricing.CostsRequest:
+    properties:
+      clientes_inadimplentes:
+        type: integer
+      clientes_totais:
+        type: integer
+      gasto_fixo_mensal:
+        type: number
+      taxa_bancaria:
+        type: number
+    type: object
+  pagliaro-precificador_internal_pricing.GenerateTableRequest:
+    properties:
+      ano_calculo:
+        type: integer
+      ano_ibge:
+        type: integer
+      ano_tabua_mortalidade:
+        type: integer
+      custos:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.CostsRequest'
+      ibge:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.IBGESourceRequest'
+      margens:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.MarginsRequest'
+      mutualidade:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.MutualityRequest'
+      planos:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.PlanRequest'
+        type: array
+      revisao_populacional:
+        type: integer
+      versao:
+        type: string
+    type: object
+  pagliaro-precificador_internal_pricing.IBGESourceRequest:
+    properties:
+      mortality_url:
+        type: string
+      population_url:
+        type: string
+    type: object
+  pagliaro-precificador_internal_pricing.MarginsRequest:
+    properties:
+      comissao:
+        type: number
+      lucro:
+        type: number
+    type: object
+  pagliaro-precificador_internal_pricing.MemberRequest:
+    properties:
+      data_nascimento:
+        type: string
+      erp_pessoa_id:
+        type: string
+      idade:
+        type: integer
+      nome:
+        type: string
+      parentesco:
+        type: string
+      titular:
+        type: boolean
+    type: object
+  pagliaro-precificador_internal_pricing.MutualityRequest:
+    properties:
+      fator:
+        type: number
+      metodo:
+        type: string
+    type: object
+  pagliaro-precificador_internal_pricing.PlanRequest:
+    properties:
+      cobertura:
+        type: number
+      nome:
+        type: string
+    type: object
+  pagliaro-precificador_internal_pricing.PricedMember:
+    properties:
+      erp_pessoa_id:
+        type: string
+      idade:
+        type: integer
+      parentesco:
+        type: string
+      qx:
+        type: number
+      titular:
+        type: boolean
+    type: object
+  pagliaro-precificador_internal_pricing.QuotePrices:
+    properties:
+      formula_a:
+        type: number
+      formula_c:
+        type: number
+      formula_recomendada:
+        type: string
+      sinistro_anual_esperado:
+        type: number
+      valor_mensal_final:
+        type: number
+    type: object
+  pagliaro-precificador_internal_pricing.QuoteRequest:
+    properties:
+      cobertura:
+        type: number
+      data_calculo:
+        type: string
+      erp_orcamento_id:
+        type: string
+      formula:
+        type: string
+      integrantes:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.MemberRequest'
+        type: array
+      nome_plano:
+        type: string
+      retornar_comparativo:
+        type: boolean
+    type: object
+  pagliaro-precificador_internal_pricing.QuoteResult:
+    properties:
+      cobertura:
+        type: number
+      erp_orcamento_id:
+        type: string
+      faixa_base:
+        type: string
+      gerado_em:
+        type: string
+      idade_media_ponderada:
+        type: number
+      integrantes:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.PricedMember'
+        type: array
+      nome_plano:
+        type: string
+      resultado:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.QuotePrices'
+      soma_qx:
+        type: number
+      valor_base_mensal:
+        type: number
+      versao_tabela:
+        type: string
+    type: object
+  pagliaro-precificador_internal_pricing.StatelessQuoteRequest:
+    properties:
+      cobertura:
+        type: number
+      data_calculo:
+        type: string
+      erp_orcamento_id:
+        type: string
+      formula:
+        type: string
+      integrantes:
+        items:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.MemberRequest'
+        type: array
+      nome_plano:
+        type: string
+      retornar_comparativo:
+        type: boolean
+      tabela:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.TableArtifact'
+    type: object
+  pagliaro-precificador_internal_pricing.TableArtifact:
+    properties:
+      assinatura:
+        type: string
+      gerada_em:
+        type: string
+      hash:
+        type: string
+      ibge:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.IBGEMetadata'
+      parametros:
+        $ref: '#/definitions/pagliaro-precificador_internal_pricing.GenerateTableRequest'
+      qx_mortalidade_por_idade:
+        additionalProperties:
+          format: float64
+          type: number
+        type: object
+      resultado:
+        $ref: '#/definitions/pagliaro-precificador_internal_domain.TableResult'
+      schema_version:
+        type: string
+      tipo:
+        type: string
+      versao:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: |-
+    API para geração de tabela anual de preços e cálculo de orçamento de planos funerários.
+    O fluxo stateless usa /v1/admin/tabelas/gerar-json e /v1/erp/orcamentos/calcular sem banco obrigatório.
+  title: Pagliaro Precificador API
+  version: 0.3.0
+paths:
+  /health:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_app.healthResponse'
+      summary: Health check
+      tags:
+      - Sistema
+  /openapi.json:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Contrato OpenAPI gerado
+      tags:
+      - Sistema
+  /v1/admin/api-keys:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_app.apiKeyListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Listar API keys
+      tags:
+      - Admin - API Keys
+    post:
+      consumes:
+      - application/json
+      description: Cria chave admin ou erp. O segredo completo aparece apenas nesta
+        resposta.
+      parameters:
+      - description: Dados da chave
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/internal_app.createAPIKeyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/internal_app.createAPIKeyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Criar API key
+      tags:
+      - Admin - API Keys
+  /v1/admin/api-keys/{id}/revogar:
+    post:
+      parameters:
+      - description: ID da API key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.APIKey'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Revogar API key
+      tags:
+      - Admin - API Keys
+  /v1/admin/logs/requisicoes:
+    get:
+      parameters:
+      - description: Quantidade máxima de registros, até 500
+        in: query
+        name: limite
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_app.requestLogListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Listar logs de requisições
+      tags:
+      - Admin - Auditoria
+  /v1/admin/tabelas:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_app.pricingTableListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Listar tabelas
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/{id}:
+    get:
+      parameters:
+      - description: ID da tabela
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTable'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Consultar tabela por ID
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/{id}/aprovar:
+    post:
+      parameters:
+      - description: ID da tabela
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTable'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Aprovar tabela
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/{id}/arquivar:
+    post:
+      parameters:
+      - description: ID da tabela
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTable'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Arquivar tabela
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/{id}/ativar:
+    post:
+      description: Ativa uma tabela aprovada e arquiva a tabela ativa anterior.
+      parameters:
+      - description: ID da tabela
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTable'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Ativar tabela
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/ativa:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTable'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Consultar tabela ativa
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/gerar:
+    post:
+      consumes:
+      - application/json
+      description: Baixa dados oficiais do IBGE, calcula a tabela e salva como draft
+        no storage configurado.
+      parameters:
+      - description: Parâmetros de geração da tabela
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.GenerateTableRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.PricingTable'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Gerar tabela stateful
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/gerar-json:
+    post:
+      consumes:
+      - application/json
+      description: Baixa dados oficiais do IBGE, calcula a tabela e retorna um JSON
+        autocontido para download.
+      parameters:
+      - description: Parâmetros de geração da tabela
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.GenerateTableRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Content-Disposition:
+              description: attachment; filename=tabela-precos.json
+              type: string
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_pricing.TableArtifact'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Gerar tabela JSON stateless
+      tags:
+      - Admin - Tabelas
+  /v1/admin/tabelas/simular:
+    post:
+      consumes:
+      - application/json
+      description: Calcula cenários de mutualidade sem salvar tabela no storage.
+      parameters:
+      - description: Parâmetros de simulação
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/internal_app.simulateTableRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_app.simulateTableResponseDoc'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Simular cenários de tabela
+      tags:
+      - Admin - Tabelas
+  /v1/erp/orcamentos:
+    post:
+      consumes:
+      - application/json
+      description: Usa a tabela ativa salva no storage e persiste o orçamento por
+        erp_orcamento_id.
+      parameters:
+      - description: Parâmetros do orçamento
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.QuoteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.QuoteRecord'
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.QuoteRecord'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Gerar orçamento stateful
+      tags:
+      - ERP - Orçamentos
+  /v1/erp/orcamentos/{id}:
+    get:
+      parameters:
+      - description: ID do orçamento
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_domain.QuoteRecord'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Consultar orçamento
+      tags:
+      - ERP - Orçamentos
+  /v1/erp/orcamentos/calcular:
+    post:
+      consumes:
+      - application/json
+      description: Valida hash/assinatura da tabela enviada no payload e calcula o
+        orçamento sem depender de banco.
+      parameters:
+      - description: Tabela JSON e integrantes do orçamento
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/pagliaro-precificador_internal_pricing.StatelessQuoteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pagliaro-precificador_internal_pricing.QuoteResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/internal_app.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Calcular orçamento com tabela JSON
+      tags:
+      - ERP - Orçamentos
+schemes:
+- http
+- https
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: X-API-Key
+    type: apiKey
+swagger: "2.0"
